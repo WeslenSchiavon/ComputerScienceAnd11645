@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Computação & Lei 11.645/08 — Projeto</title>
+  <meta name="description" content="Recontextualização de problemas clássicos (Mochila 0/1 e Caixeiro-Viajante) em contexto indígena com PRIMM no ensino de Computação." />
+  <meta property="og:title" content="Computação & Lei 11.645/08 — Projeto" />
+  <meta property="og:description" content="Mochila 0/1 e TSP em contexto indígena; PRIMM; resultados de aprendizagem; materiais didáticos." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/9919?s=200&v=4" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b1020; /* deep slate */
+      --bg-alt: #0f172a;
+      --card: #0e1a36;
+      --muted: #9fb2d0;
+      --text: #e6ecff;
+      --brand: linear-gradient(135deg,#60a5fa,#22d3ee,#a78bfa);
+      --accent: #60a5fa;
+      --ring: rgba(96,165,250,.3);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans','Apple Color Emoji','Segoe UI Emoji';
+         background: radial-gradient(1200px 800px at 80% -10%, #1c2548 0%, var(--bg) 55%), var(--bg);
+         color:var(--text);
+         line-height:1.65}
+    a{color:inherit}
+    .wrapper{max-width:1100px;margin:0 auto;padding:0 20px}
+    header{position:sticky;top:0;background:rgba(15,23,42,.7);backdrop-filter:saturate(160%) blur(10px);z-index:40;border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{display:flex;gap:10px;align-items:center;text-decoration:none}
+    .logo{height:28px;width:28px;border-radius:8px;background:var(--brand);box-shadow:0 6px 20px rgba(96,165,250,.35)}
+    .brand span{font-weight:700;letter-spacing:.2px}
+    .nav a{opacity:.9;text-decoration:none}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#0b1020;border:none;border-radius:12px;padding:10px 14px;font-weight:600;text-decoration:none;box-shadow:var(--shadow)}
+    .btn:hover{filter:brightness(1.05)}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.12)}
+    .hero{padding:72px 0 40px}
+    .title{font-size: clamp(28px, 4vw, 46px);line-height:1.1;margin:0 0 14px}
+    .subtitle{font-size: clamp(15px, 2vw, 18px);max-width:780px;opacity:.9;margin:0}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+    .cards{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin:38px 0}
+    .card{grid-column: span 12;background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:18px 18px 16px;box-shadow:var(--shadow)}
+    @media(min-width:800px){.card.half{grid-column: span 6}}
+    .card h3{margin:6px 0 8px;font-size:20px}
+    .meta{color:var(--muted);font-size:14px;margin-bottom:6px}
+    section{padding:30px 0 10px}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .kpi{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:14px}
+    .kpi .label{font-size:12px;color:var(--muted)}
+    .kpi .value{font-size:22px;font-weight:700}
+    .list{padding-left:18px}
+    .grid-2{display:grid;grid-template-columns:1fr;gap:18px}
+    @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+    .table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+    .table th,.table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left}
+    .badge{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:rgba(96,165,250,.15);border:1px solid rgba(96,165,250,.35)}
+    footer{margin-top:40px;padding:32px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.06)}
+    .anchor{scroll-margin-top:80px}
+    .chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
+    .bar{height:8px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden}
+    .bar > span{display:block;height:100%;background:linear-gradient(90deg,#60a5fa,#22d3ee,#a78bfa)}
+    .muted{color:var(--muted)}
+    code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.08)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrapper nav">
+      <a class="brand" href="#">
+        <span class="logo" aria-hidden="true"></span>
+        <span>Computação & 11.645/08</span>
+      </a>
+      <nav style="display:flex; gap:16px; align-items:center">
+        <a href="#sobre">Sobre</a>
+        <a href="#atividades">Atividades</a>
+        <a href="#primm">PRIMM</a>
+        <a href="#resultados">Resultados</a>
+        <a href="#materiais">Materiais</a>
+        <a href="#contato" class="chip">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrapper" id="sobre">
+      <h1 class="title">Mochila 0/1 e Caixeiro‑Viajante em contexto indígena</h1>
+      <p class="subtitle">Recontextualizamos problemas clássicos de Algoritmos (Mochila 0/1 e TSP) com 
+        elementos narrativos inspirados em contextos indígenas e conduzimos atividades no formato 
+        <strong>PRIMM</strong> (Predict, Run, Investigate, Modify, Make). O projeto dialoga com a 
+        <strong>Lei 11.645/08</strong> e com diretrizes de Computação na BNCC, preservando a 
+        formulação clássica dos problemas e a ética no uso de referências culturais.</p>
+      <div class="actions">
+        <a class="btn" href="#materiais">Ver materiais</a>
+        <a class="btn ghost" href="#resultados">Ver resultados</a>
+      </div>
+
+      <div class="cards">
+        <article class="card half">
+          <div class="meta">Problema do Cesto</div>
+          <h3>Mochila 0/1 (formulação clássica)</h3>
+          <p>Seleção de itens com <em>peso</em> e <em>valor</em> sob capacidade <code>W</code>. 
+             Usamos itens didáticos (p.ex., arumã, jenipapo, yãkoana) apenas como narrativa, 
+             mantendo o modelo e algoritmos (DP, força‑bruta, guloso) inalterados.</p>
+        </article>
+        <article class="card half">
+          <div class="meta">Problema do Caminho dos Povos</div>
+          <h3>Caixeiro‑Viajante (TSP métrico)</h3>
+          <p>Visitar todas as aldeias e retornar com custo mínimo. Custos euclidianos sintéticos, 
+            instâncias pequenas e <em>transparência</em> para visualizar armadilhas gulosas e 
+            melhorias com <code>2‑opt</code>. A narrativa inclui a motivação de <strong>trocas entre aldeias</strong> 
+            (p.ex., fibras de arumã, pigmentos), sem alterar a definição do TSP.</p>
+        </article>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="label">Turmas</div><div class="value">4</div></div>
+        <div class="kpi"><div class="label">Ganhos (TSP)</div><div class="value">50% → 85.7%</div></div>
+        <div class="kpi"><div class="label">Ganhos (Mochila)</div><div class="value">33.2% → 85.6%</div></div>
+      </div>
+    </section>
+
+    <section class="wrapper anchor" id="atividades">
+      <h2>Atividades de Algoritmos</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Mochila 0/1 — "Problema do Cesto"</h3>
+          <ul class="list">
+            <li><strong>Objetivo:</strong> modelar decisões sob restrição; comparar DP, força‑bruta e guloso.</li>
+            <li><strong>Narrativa:</strong> escolhas de itens em deslocamentos (cesto como capacidade).</li>
+            <li><strong>Ética:</strong> pesos/valores <em>didáticos</em>; distinção entre modelo e realidade.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>TSP — "Caminho dos Povos"</h3>
+          <ul class="list">
+            <li><strong>Objetivo:</strong> compreender roteamento e melhoria local (2‑opt).</li>
+            <li><strong>Motivação:</strong> deslocar‑se para <strong>trocas entre aldeias</strong> (fibras, pigmentos etc.).</li>
+            <li><strong>Instâncias:</strong> N ≤ 6–8; custos euclidianos; visualização de armadilhas gulosas.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrapper anchor" id="primm">
+      <h2>Metodologia PRIMM</h2>
+      <div class="card">
+        <ol class="list" style="margin:0">
+          <li><strong>Predict:</strong> prever solução/rota sem executar.</li>
+          <li><strong>Run:</strong> executar código base (DP e guloso; vizinho mais próximo no TSP).</li>
+          <li><strong>Investigate:</strong> inspecionar tabela de DP, matriz de adjacência, laços e decisões.</li>
+          <li><strong>Modify:</strong> alterar <code>w_i</code>/<code>v_i</code>, inserir item/restrição, aplicar 2‑opt e observar efeitos.</li>
+          <li><strong>Make:</strong> criar instância autoral pequena e justificar critérios/rotas.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="wrapper anchor" id="resultados">
+      <h2>Resultados de Aprendizagem</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Resumo Pré → Pós</h3>
+          <table class="table">
+            <thead><tr><th>Aula</th><th>N (pré/pós)</th><th>Média (%)</th><th>Efeito</th></tr></thead>
+            <tbody>
+              <tr><td>TSP</td><td>28 / 25</td><td>50.0 → 85.7</td><td><span class="badge">g≈1.81, p&lt;0.001</span></td></tr>
+              <tr><td>Mochila</td><td>40 / 39</td><td>33.2 → 85.6</td><td><span class="badge">g≈2.91, p&lt;0.001</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Visual — ganho médio</h3>
+          <p class="muted" style="margin-top:-4px">Indicador simples (pré → pós)</p>
+          <div style="display:grid; gap:12px">
+            <div>
+              <div style="display:flex;justify-content:space-between"><span>TSP</span><span>85.7%</span></div>
+              <div class="bar"><span style="width:85.7%"></span></div>
+              <div class="muted" style="font-size:12px">pré: 50.0%</div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between"><span>Mochila</span><span>85.6%</span></div>
+              <div class="bar"><span style="width:85.6%"></span></div>
+              <div class="muted" style="font-size:12px">pré: 33.2%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="muted">Dados agregados de pré/pós‑testes; instâncias e rubricas disponíveis nos materiais.</p>
+    </section>
+
+    <section class="wrapper anchor" id="materiais">
+      <h2>Materiais do Projeto</h2>
+      <div class="cards">
+        <article class="card half">
+          <h3>Slides e PDFs</h3>
+          <ul class="list">
+            <li><a href="assets/Problema_do_Caminho.pdf">Problema do Caminho (PDF)</a></li>
+            <li><a href="assets/Problema_do_Cesto.pdf">Problema do Cesto (PDF)</a></li>
+          </ul>
+        </article>
+        <article class="card half">
+          <h3>Instrumentos (CSV)</h3>
+          <ul class="list">
+            <li><a href="assets/Pre_Teste_Problema_do_Caminho.csv">Pré — Caminho</a></li>
+            <li><a href="assets/Pos_Teste_Problema_do_Caminho.csv">Pós — Caminho</a></li>
+            <li><a href="assets/Pre_Teste_Problema_do_Cesto.csv">Pré — Cesto</a></li>
+            <li><a href="assets/Pos_Teste_Problema_do_Cesto.csv">Pós — Cesto</a></li>
+          </ul>
+        </article>
+      </div>
+      <p class="muted">Substitua os arquivos em <code>/assets</code> pelos seus materiais reais (renomeie se necessário).</p>
+    </section>
+
+    <section class="wrapper anchor" id="contato" style="padding-bottom:28px">
+      <h2>Autores & Contato</h2>
+      <div class="card">
+        <p><strong>Coordenação:</strong> Weslen Schiavon</p>
+        <p class="muted">Dúvidas, contribuições e relatos de uso são bem‑vindos via Issues/Discussions no repositório.</p>
+        <p class="muted">Licença sugerida: <a href="https://creativecommons.org/licenses/by/4.0/deed.pt_BR">CC BY 4.0</a> para materiais didáticos; código sob MIT.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrapper" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <span>© <span id="year"></span> Projeto Computação & 11.645/08</span>
+      <span class="muted">GitHub Pages • Build estático</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
